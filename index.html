@@ -1,0 +1,491 @@
+<!--
+  راستا — نسخه‌ی ۲ (۳ مهر ۱۴۰۵)
+  همان قوس روایت نسخه‌ی ۱: تاری ← تمرکز ← شلوغی ← یک کلمه ← مسیرهای بسیار ← یک راه ← نام
+  تغییرها: لنزِ آشکارکننده در هیرو · کلمه‌ها به مرکز کشیده می‌شوند · برچسب روی جاده‌ها ·
+  بعد از پیدا شدن راه، صفحه روشن می‌شود · دردهای کسب‌وکار ایرانی · سه قدم · بنیان‌گذار · تلگرام
+  اینرسی و «کارشناس بیشتر یا تصمیم بهتر» عمداً روی سایت نیست؛ مال وبینار است.
+  تلگرام: @mohammad_sh_alizadeh (آیدی شخصی، عمداً — برند شخصی). وبینار عمداً روی سایت نیست.
+-->
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>راستا — حالا می‌توانی مسئله را ببینی</title>
+<meta name="description" content="راستا به کسب‌وکارهای کوچک و متوسط کمک می‌کند گلوگاه واقعی رشدشان را پیدا کنند، پیش از آنکه پول و زمان بیشتری صرف مسئله‌ی اشتباه شود." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;300;400;500;700;900&display=swap" rel="stylesheet" />
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --ink:#0C0D10; --slate:#15171C; --fog:#7A7F86; --linen:#EDE9E0; --paper:#F4F1EA;
+    --brass:#C8973F; --brass-deep:#9C7127; --brass-soft:rgba(200,151,63,.16);
+    --line:rgba(237,233,224,.10); --line-dark:rgba(12,13,16,.12);
+    --fa:"Vazirmatn", Tahoma, system-ui, sans-serif;
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --gutter:clamp(20px,6vw,72px);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--linen);font-family:var(--fa);font-weight:400;line-height:1.85;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  ::selection{background:var(--brass-soft)}
+  a{color:inherit}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+
+  /* ---------- سربرگ ثابت ---------- */
+  .topbar{position:fixed;inset-inline:0;top:0;z-index:60;display:flex;justify-content:space-between;align-items:center;padding:18px var(--gutter);pointer-events:none}
+  .wordmark{font-weight:900;font-size:19px;color:var(--linen);pointer-events:auto;text-decoration:none;padding:3px 14px;border-radius:99px;background:rgba(12,13,16,.55);backdrop-filter:blur(6px)}
+  .top-cta{pointer-events:auto;font-size:13px;font-weight:500;text-decoration:none;padding:7px 16px;border:1px solid rgba(200,151,63,.55);border-radius:99px;color:var(--brass);background:rgba(12,13,16,.55);backdrop-filter:blur(6px);transition:.3s var(--ease)}
+  .top-cta:hover{background:var(--brass);color:var(--ink)}
+
+  .rail{position:fixed;right:30px;top:50%;transform:translateY(-50%);height:42vh;width:1px;background:var(--line);z-index:40;mix-blend-mode:difference}
+  .rail .fill{position:absolute;top:0;right:0;width:1px;height:0;background:var(--brass)}
+  @media(max-width:900px){.rail{display:none}}
+
+  .eyebrow{font-size:13px;color:var(--fog);font-weight:500;letter-spacing:.02em}
+  .stage{position:sticky;top:0;height:100vh;height:100svh;display:grid;place-items:center;overflow:hidden}
+  section{position:relative}
+
+  /* ================= ۱ · لنز ================= */
+  #hero{height:100vh;height:100svh}
+  .hero-inner{display:flex;flex-direction:column;align-items:center;gap:26px;padding-inline:var(--gutter);text-align:center}
+  .hero-copy{position:relative;display:grid;padding:28px 10px}
+  .layer{grid-area:1/1}
+  .layer h1{font-weight:300;font-size:clamp(34px,6.4vw,76px);line-height:1.35;text-wrap:balance}
+  .layer h1 b{font-weight:700}
+  .layer .eyebrow{margin-bottom:16px;display:block}
+  .blurred{filter:blur(11px);opacity:.4;user-select:none}
+  .sharp{--r:160%;--x:50%;--y:50%;clip-path:circle(var(--r) at var(--x) var(--y))}
+  .lens{--r:0px;--x:50%;--y:50%;position:absolute;left:var(--x);top:var(--y);width:calc(var(--r)*2);height:calc(var(--r)*2);transform:translate(-50%,-50%);border-radius:50%;border:1.5px solid var(--brass);box-shadow:0 0 0 6px var(--brass-soft),inset 0 0 40px rgba(200,151,63,.08);pointer-events:none;opacity:0}
+  .hero-sub{max-width:520px;color:#BDB9B0;font-weight:300;font-size:clamp(16px,2vw,19px);opacity:1;transition:opacity .9s var(--ease)}
+  html.js .hero-sub{opacity:0}
+  html.js body.revealed .hero-sub{opacity:1}
+  .scrollcue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);text-align:center;transition:opacity .8s}
+  html.js .scrollcue{opacity:0}
+  html.js body.revealed .scrollcue{opacity:1}
+  .scrollcue span{font-size:13px;color:var(--fog)}
+  .scrollcue i{display:block;width:5px;height:5px;border-radius:50%;background:var(--brass);margin:10px auto 0;animation:blink 1.5s var(--ease) infinite}
+  @keyframes blink{0%,100%{opacity:.2;transform:translateY(0)}50%{opacity:1;transform:translateY(5px)}}
+
+  /* ================= ۲ · شلوغی ← تمرکز ================= */
+  #noise{height:230vh}
+  .cloud{position:absolute;inset:0}
+  .buzz{position:absolute;transform:translate(-50%,-50%);font-weight:300;color:var(--fog);white-space:nowrap;opacity:.85;will-change:transform,opacity}
+  @media(max-width:600px){.buzz.xtra{display:none}}
+  .focusword{position:absolute;left:50%;top:46%;transform:translate(-50%,-50%) scale(.9);font-weight:200;font-size:clamp(60px,12vw,150px);line-height:1.2;color:var(--linen);transition:opacity .8s var(--ease),filter .8s var(--ease),transform 1s var(--ease)}
+  html.js .focusword{opacity:0;filter:blur(8px)}
+  html.js .focusword.on{opacity:1;filter:blur(0);transform:translate(-50%,-50%) scale(1)}
+  .focusword::after{content:"";display:block;height:2px;width:0;margin:6px auto 0;background:var(--brass);transition:width 1s var(--ease) .3s}
+  .focusword.on::after{width:38%}
+  .s2-line{position:absolute;left:50%;bottom:12vh;transform:translateX(-50%);width:min(560px,86vw);text-align:center;font-size:clamp(17px,2.4vw,23px);font-weight:300;transition:opacity .8s ease .15s}
+  html.js .s2-line{opacity:0}
+  html.js .s2-line.on{opacity:1}
+
+  /* ================= ۳ · پرسش ================= */
+  .question{padding:22vh var(--gutter);display:flex;justify-content:center}
+  .question-inner{max-width:760px;display:flex;flex-direction:column;gap:22px}
+  .question p.q{font-size:clamp(24px,3.8vw,40px);font-weight:300;line-height:1.6;text-wrap:balance}
+  .question p.q em{font-style:normal;color:var(--brass);font-weight:500}
+  .question p.a{color:#B7B3AA;font-size:clamp(16px,2vw,19px);font-weight:300;border-inline-start:2px solid var(--brass);padding-inline-start:16px}
+
+  /* ================= ۴ · جاده‌ها ================= */
+  #roads-sec{height:260vh}
+  .roads-wrap{display:flex;flex-direction:column;align-items:center;gap:clamp(12px,3vh,32px);padding-inline:var(--gutter)}
+  .roads{width:min(720px,100%);height:min(52vh,460px);overflow:visible}
+  .road{fill:none;stroke:var(--fog);stroke-width:1.4;opacity:.55;transition:opacity .6s var(--ease)}
+  .road.gone{opacity:0}
+  .road.chosen{stroke:var(--brass);stroke-width:2.2;opacity:1}
+  .rlabel{fill:var(--fog);font-family:var(--fa);font-size:12px;font-weight:400;transition:opacity .5s var(--ease)}
+  .rlabel.gone{opacity:0}
+  .rlabel.win{fill:var(--brass);font-weight:700;font-size:13px;opacity:0;transition:opacity .6s}
+  .rlabel.win.on{opacity:1}
+  .origin{fill:var(--linen)}
+  .dest{fill:var(--brass);opacity:0;transition:opacity .6s}
+  .dest.on{opacity:1}
+  .s3-copy{width:min(640px,100%);text-align:center;transition:opacity .8s}
+  html.js .s3-copy{opacity:0}
+  html.js .s3-copy.on{opacity:1}
+  .s3-copy p{font-size:clamp(19px,2.7vw,27px);font-weight:300;line-height:1.7}
+
+  /* ================= صفحه روشن می‌شود ================= */
+  .daylight{background:var(--paper);color:var(--ink);position:relative}
+  .daylight::before{content:"";position:absolute;inset-inline:0;top:-30vh;height:30vh;background:linear-gradient(to bottom,var(--ink),var(--paper));pointer-events:none}
+  .daylight .eyebrow{color:#6E6A62}
+  .block{padding:14vh var(--gutter);display:flex;justify-content:center}
+  .block-inner{width:min(980px,100%);display:flex;flex-direction:column;gap:34px}
+  .block h2{font-weight:300;font-size:clamp(28px,4.4vw,48px);line-height:1.45;text-wrap:balance}
+  .block h2 b{font-weight:700}
+  .lede{font-size:clamp(16px,2vw,19px);color:#44423D;max-width:62ch;font-weight:400}
+  .reveal{transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  html.js .reveal{opacity:0;transform:translateY(20px)}
+  html.js .reveal.in{opacity:1;transform:none}
+
+  /* دردها */
+  .pains{list-style:none;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--line-dark)}
+  .pains li{padding:20px 0;padding-inline-end:28px;border-bottom:1px solid var(--line-dark);font-size:clamp(16px,1.9vw,18px);line-height:1.8;color:#3C3A35;position:relative;padding-inline-start:26px}
+  .pains li::before{content:"";position:absolute;inset-inline-start:0;top:31px;width:10px;height:2px;background:var(--brass)}
+  .pains li b{color:var(--ink);font-weight:700}
+  @media(max-width:720px){.pains{grid-template-columns:1fr}.pains li{padding-inline-end:0}}
+  .pains-close{display:flex;flex-wrap:wrap;gap:20px 36px;align-items:center;justify-content:space-between;background:var(--ink);color:var(--linen);padding:26px clamp(20px,4vw,36px)}
+  .pains-close p{flex:1 1 340px;font-size:clamp(16px,2vw,19px);font-weight:300;line-height:1.85}
+  .pains-close .cta{background:var(--linen);color:var(--ink)}
+  .pains-close .cta:hover{background:var(--brass)}
+
+  /* سه قدم */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;counter-reset:s}
+  @media(max-width:800px){.steps{grid-template-columns:1fr}}
+  .stepc{display:flex;flex-direction:column;gap:10px;padding-top:18px;border-top:2px solid var(--ink)}
+  .stepc .n{font-size:40px;font-weight:200;color:var(--brass-deep);line-height:1}
+  .stepc h3{font-size:19px;font-weight:700}
+  .stepc p{color:#55524B;font-size:15.5px}
+  .boundary{font-size:clamp(17px,2.2vw,21px);font-weight:300;border-inline-start:2px solid var(--brass);padding-inline-start:18px;max-width:62ch}
+  .boundary b{font-weight:700}
+
+  /* تجربه */
+  .proof{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line-dark)}
+  @media(max-width:700px){.proof{grid-template-columns:1fr}}
+  .pf{padding:22px 0;display:flex;flex-direction:column;gap:4px}
+  .pf + .pf{border-inline-start:1px solid var(--line-dark);padding-inline-start:22px}
+  @media(max-width:700px){.pf + .pf{border-inline-start:0;padding-inline-start:0;border-top:1px solid var(--line-dark)}}
+  .pf .big{font-size:clamp(34px,5vw,48px);font-weight:200;line-height:1.2;font-variant-numeric:tabular-nums}
+  .pf p{color:#55524B;font-size:15px}
+
+  /* ================= وبینار + نام (تاریک) ================= */
+  .night{background:var(--ink);color:var(--linen);padding:16vh var(--gutter) 10vh;display:flex;flex-direction:column;align-items:center;gap:80px;
+    background-image:radial-gradient(110% 70% at 50% 0%,rgba(200,151,63,.07),transparent 60%)}
+  .cta{display:inline-flex;align-items:center;gap:12px;font-size:15px;color:var(--ink);background:var(--linen);padding:15px 30px;border-radius:2px;text-decoration:none;font-weight:500;transition:.35s var(--ease);white-space:nowrap}
+  .cta:hover{background:var(--brass);transform:translateY(-2px)}
+  .cta .arrow{transition:transform .35s var(--ease)}
+  .cta:hover .arrow{transform:translateX(-5px)}
+  .cta.dark{background:var(--ink);color:var(--linen)}
+  .cta.dark:hover{background:var(--brass);color:var(--ink)}
+  .finale{max-width:720px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:28px}
+  .finale .big{font-weight:300;font-size:clamp(26px,4.4vw,44px);line-height:1.5}
+  .finale .big em{font-style:normal;color:var(--brass);font-weight:500}
+  .namecard{width:100%;padding:50px 30px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(237,233,224,.02),transparent)}
+  .namecard .fa{font-weight:900;font-size:clamp(56px,11vw,104px);line-height:1.25}
+  .namecard .gloss{margin-top:18px;font-weight:300;font-size:clamp(18px,2.6vw,24px);color:var(--brass)}
+  .namecard .sub{margin-top:12px;color:var(--fog);font-size:15px;font-weight:300}
+  .foot{color:var(--fog);font-size:12px}
+  .founder{width:min(720px,100%);border-top:1px solid var(--line);padding-top:36px;display:flex;flex-direction:column;gap:18px}
+  .founder-body{display:grid;grid-template-columns:auto 1fr;gap:12px 36px;align-items:start}
+  @media(max-width:640px){.founder-body{grid-template-columns:1fr}}
+  .founder-name{display:flex;flex-direction:column;gap:2px}
+  .founder-name strong{font-size:20px;font-weight:700}
+  .founder-name span{font-size:13px;color:var(--brass)}
+  .founder-body p{color:#C9C5BC;font-weight:300;font-size:16px;line-height:1.9}
+  .founder-link{grid-column:2;justify-self:start;color:var(--brass);text-decoration:none;font-weight:500;font-size:15px;border-bottom:1px solid rgba(200,151,63,.4);padding-bottom:2px;transition:.3s var(--ease)}
+  .founder-link:hover{color:var(--linen);border-color:var(--linen)}
+  @media(max-width:640px){.founder-link{grid-column:1}}
+
+  @media(max-width:600px){
+    .topbar{padding:12px 16px}
+    .top-cta{padding:6px 12px;font-size:12px}
+    .block{padding-block:10vh}
+    .question{padding-block:14vh}
+    .night{padding-block:12vh 8vh;gap:56px}
+    .rlabel{font-size:14px}
+    .rlabel.win{font-size:15px}
+    .cta{padding:14px 22px;white-space:normal}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:.001ms !important;animation:none !important;scroll-behavior:auto !important}
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="wordmark" href="#hero">راستا</a>
+  <a class="top-cta" href="https://t.me/mohammad_sh_alizadeh" target="_blank" rel="noopener">گفت‌وگو در تلگرام</a>
+</header>
+<div class="rail" aria-hidden="true"><div class="fill" id="railFill"></div></div>
+
+<main>
+
+<!-- ============ ۱ · لنز ============ -->
+<section id="hero">
+  <div class="stage">
+    <div class="hero-inner">
+      <div class="hero-copy" id="heroCopy">
+        <div class="layer blurred" aria-hidden="true">
+          <span class="eyebrow">تشخیص کسب‌وکار و شفافیت رشد</span>
+          <h1>حالا می‌توانی<br><b>مسئله</b> را ببینی.</h1>
+        </div>
+        <div class="layer sharp" id="sharp">
+          <span class="eyebrow">تشخیص کسب‌وکار و شفافیت رشد</span>
+          <h1>حالا می‌توانی<br><b>مسئله</b> را ببینی.</h1>
+        </div>
+        <div class="lens" id="lens" aria-hidden="true"></div>
+      </div>
+      <p class="hero-sub">برای کسب‌وکارهای کوچک و متوسطی که پول خرج می‌کنند، زحمت می‌کشند، و باز هم جلو نمی‌روند.</p>
+    </div>
+    <div class="scrollcue"><span>پایین‌تر</span><i></i></div>
+  </div>
+</section>
+
+<!-- ============ ۲ · شلوغی ← تمرکز ============ -->
+<section id="noise" class="scrub">
+  <div class="stage">
+    <div class="cloud" id="cloud"></div>
+    <div class="focusword" id="focusword">تمرکز</div>
+    <p class="s2-line" id="s2line">بیشتر کسب‌وکارها کمبودِ ابزار ندارند.<br>کمبودِ شفافیت دارند.</p>
+  </div>
+</section>
+
+<!-- ============ ۳ · پرسش ============ -->
+<section class="question">
+  <div class="question-inner">
+    <span class="eyebrow reveal">یک پرسش، قبل از هر کاری</span>
+    <p class="q reveal">اگر از فردا فقط اجازه داشتی روی <em>یک</em> کار در کسب‌وکارت تمرکز کنی، آن یک کار چه بود؟</p>
+    <p class="a reveal">اگر جوابش فوری به ذهنت نرسید، احتمالاً مسئله‌ی اصلی همین‌جاست.</p>
+  </div>
+</section>
+
+<!-- ============ ۴ · جاده‌ها ============ -->
+<section id="roads-sec" class="scrub">
+  <div class="stage">
+    <div class="roads-wrap">
+    <svg class="roads" id="roads" viewBox="-40 -20 480 340" fill="none" preserveAspectRatio="xMidYMid meet" role="img" aria-label="از میان شش راه، یک راه باقی می‌ماند">
+      <path class="road" d="M200 300 C120 230 40 210 30 70"/>
+      <path class="road" d="M200 300 C150 220 110 200 96 60"/>
+      <path class="road" d="M200 300 C180 220 165 180 158 56"/>
+      <path class="road chosen" id="chosen" d="M200 300 C205 220 205 150 200 40" stroke-dasharray="340" stroke-dashoffset="340"/>
+      <path class="road" d="M200 300 C220 220 235 180 244 56"/>
+      <path class="road" d="M200 300 C250 220 290 200 306 60"/>
+      <path class="road" d="M200 300 C280 230 360 210 372 70"/>
+      <text class="rlabel" x="30"  y="56" text-anchor="middle">تبلیغ بیشتر</text>
+      <text class="rlabel" x="96"  y="28" text-anchor="middle">سایت نو</text>
+      <text class="rlabel" x="158" y="42" text-anchor="middle">سئو</text>
+      <text class="rlabel" x="244" y="42" text-anchor="middle">کانال تازه</text>
+      <text class="rlabel" x="306" y="28" text-anchor="middle">کارشناس تازه</text>
+      <text class="rlabel" x="372" y="56" text-anchor="middle">تخفیف</text>
+      <text class="rlabel win" id="winLabel" x="200" y="18" text-anchor="middle">گلوگاه واقعی</text>
+      <circle class="origin" cx="200" cy="300" r="4.5"/>
+      <circle class="dest" id="dest" cx="200" cy="40" r="5.5"/>
+    </svg>
+    <div class="s3-copy" id="s3copy">
+      <p>رشد به‌ندرت از بیشتر انجام‌دادن می‌آید.<br>از دانستنِ اینکه چه کاری را نباید کرد می‌آید.</p>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ روشنایی ============ -->
+<div class="daylight">
+
+  <!-- دردها -->
+  <section class="block" id="pains">
+    <div class="block-inner">
+      <span class="eyebrow reveal">این روزها، در ایران</span>
+      <h2 class="reveal">کدام‌یک درباره‌ی کسب‌وکار شما <b>درست</b> است؟</h2>
+      <ul class="pains reveal">
+        <li><b>بودجه‌ی تبلیغات</b> کم شده یا دیگر اصلاً نیست.</li>
+        <li><b>مشتری کمتر می‌خرد.</b> قدرت خرید افتاده و سبد خریدها کوچک شده.</li>
+        <li><b>هزینه‌ها هر ماه بالا می‌رود</b>، ولی قیمت را نمی‌شود همان‌قدر بالا برد.</li>
+        <li><b>نیروی باتجربه</b> رفته، یا نگه داشتنش از توانتان بیرون است.</li>
+        <li><b>کانالی که دیروز جواب می‌داد</b>، امروز فیلتر است، کند است، یا دیگر فروش نمی‌آورد.</li>
+        <li>پول کمی مانده و <b>معلوم نیست کجا خرجش کنید</b> که برگردد.</li>
+      </ul>
+      <div class="pains-close reveal">
+        <p>اگر چند تا از این‌ها آشناست، تنها نیستید. ولی جواب هیچ دو کسب‌وکاری یکی نیست، و در این شرایط یک خرجِ اشتباه گران‌تر از همیشه تمام می‌شود.</p>
+        <a class="cta dark" href="https://t.me/mohammad_sh_alizadeh" target="_blank" rel="noopener">درباره‌ی کسب‌وکارتان حرف بزنیم <span class="arrow">←</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- سه قدم -->
+  <section class="block" id="how">
+    <div class="block-inner">
+      <span class="eyebrow reveal">راستا چطور کار می‌کند</span>
+      <h2 class="reveal">اول تشخیص. بعد مسیر. <b>بعد همراهی.</b></h2>
+      <div class="steps reveal">
+        <div class="stepc">
+          <span class="n">۱</span>
+          <h3>گفت‌وگوی اول</h3>
+          <p>درباره‌ی کسب‌وکارتان حرف می‌زنیم: عددها، تیم، خرج‌ها، و چیزی که فکر می‌کنید مشکل است.</p>
+        </div>
+        <div class="stepc">
+          <span class="n">۲</span>
+          <h3>تشخیص مکتوب</h3>
+          <p>یک گلوگاه، به اسم. اینکه روی چه کاری تمرکز کنید و چه کارهایی را همین حالا متوقف کنید.</p>
+        </div>
+        <div class="stepc">
+          <span class="n">۳</span>
+          <h3>همراهی ماهانه</h3>
+          <p>بالای سرِ تیم خودتان می‌ایستیم، جهت را نگه می‌داریم و قبل از اینکه کار به دیوار بخورد، مکتوب هشدار می‌دهیم.</p>
+        </div>
+      </div>
+      <p class="boundary reveal">راستا اجرا نمی‌فروشد: نه سایت، نه سئو، نه پکیج تبلیغات. <b>برای همین می‌تواند بی‌تعارف بگوید کدامشان را لازم ندارید.</b></p>
+    </div>
+  </section>
+
+  <!-- تجربه -->
+  <section class="block" id="proof">
+    <div class="block-inner">
+      <span class="eyebrow reveal">پشتِ این حرف‌ها</span>
+      <div class="proof reveal">
+        <div class="pf"><span class="big">۹+</span><p>سال تصمیم‌گیری رشد در بازار ایران و بین‌الملل</p></div>
+        <div class="pf"><span class="big">۲×</span><p>حجم سرنخ فروش در ۶ هفته</p></div>
+        <div class="pf"><span class="big">−۳۳٪</span><p>هزینه‌ی جذب هر مشتری روی یک کمپین ۵۰۰ هزار دلاری</p></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============ نام ============ -->
+<section class="night" id="finale">
+  <div class="finale">
+    <span class="eyebrow reveal">این، راستاست</span>
+    <p class="big reveal">نه یک آژانس. نه یک سرویس.<br>یک شیوه‌ی <em>دیدن</em>.</p>
+    <div class="namecard reveal">
+      <div class="fa">راستا</div>
+      <div class="gloss">/ راه، جهت، مسیرِ درست /</div>
+      <div class="sub">بیشتر کسب‌وکارها از همان ابتدا روی آن بودند.<br>فقط هنوز نمی‌دیدندش.</div>
+    </div>
+    <a class="cta reveal" href="https://t.me/mohammad_sh_alizadeh" target="_blank" rel="noopener">گلوگاهت را پیدا کن <span class="arrow">←</span></a>
+  </div>
+
+  <div class="founder reveal" id="founder">
+    <span class="eyebrow">درباره‌ی بنیان‌گذار</span>
+    <div class="founder-body">
+      <div class="founder-name">
+        <strong>محمدحسین شیخ‌علیزاده</strong>
+        <span>بنیان‌گذار راستا</span>
+      </div>
+      <p>بیش از ۹ سال در رشد و مارکتینگ کسب‌وکارها در ایران و بازارهای بین‌المللی کار کرده است. راستا را ساخت چون بارها دیده بود کسب‌وکارها وقت و پولشان را صرف حل مسئله‌ی اشتباه می‌کنند.</p>
+      <a class="founder-link" href="https://alizad.info/" target="_blank" rel="noopener">رزومه و نمونه‌کارها در alizad.info <span class="arrow">←</span></a>
+    </div>
+  </div>
+
+  <div class="foot">راستا — تشخیص کسب‌وکار و شفافیت رشد</div>
+</section>
+
+</main>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var body = document.body;
+  function clamp(v){return v<0?0:v>1?1:v;}
+  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+
+  /* ---------- ۱ · لنز ---------- */
+  var sharp = document.getElementById('sharp'), lens = document.getElementById('lens'), copy = document.getElementById('heroCopy');
+  function setLens(x,y,r,o){
+    [sharp,lens].forEach(function(el){
+      el.style.setProperty('--x', x+'%'); el.style.setProperty('--y', y+'%'); el.style.setProperty('--r', r+'px');
+    });
+    lens.style.opacity = o;
+  }
+  function runLens(){
+    if(reduce){ body.classList.add('revealed'); return; }
+    var box = copy.getBoundingClientRect();
+    var r0 = Math.min(90, box.height*0.42), rMax = Math.hypot(box.width, box.height);
+    setLens(88,58,r0,0);
+    var t0 = null, D1 = 1900, D2 = 750;
+    function step(ts){
+      if(!t0) t0 = ts;
+      var t = ts - t0;
+      if(t < D1){
+        var k = ease(t/D1);
+        setLens(88 - 38*k, 58 - 8*k + Math.sin(k*Math.PI)*-10, r0, Math.min(1, t/300));
+        requestAnimationFrame(step);
+      } else if(t < D1 + D2){
+        var k2 = ease((t-D1)/D2);
+        setLens(50, 50, r0 + (rMax - r0)*k2, 1 - k2);
+        requestAnimationFrame(step);
+      } else {
+        setLens(50,50,rMax*1.2,0);
+        body.classList.add('revealed');
+      }
+    }
+    setTimeout(function(){ requestAnimationFrame(step); }, 450);
+  }
+  setLens(88,58,0,0);
+  if(document.readyState === 'complete') runLens(); else window.addEventListener('load', runLens);
+
+  /* ---------- ۲ · ابر کلمات ---------- */
+  var words = ["بازاریابی","سئو","تبلیغات","هوش مصنوعی","محتوا","رشد","قیف فروش","آنالیز","سی‌آر‌ام","استراتژی","اتوماسیون","برندینگ","ریتارگتینگ","اینفلوئنسر","شاخص‌ها"];
+  var pos = [[14,18,18],[70,14,24],[40,24,16],[84,32,17],[20,40,21],[60,36,26],[32,56,17],[76,56,21],[12,66,18],[48,72,23],[66,76,16],[26,84,19],[86,78,18],[52,12,16],[90,50,15]];
+  var cloud = document.getElementById('cloud');
+  var buzz = words.map(function(w,i){
+    var el = document.createElement('div');
+    el.className = 'buzz' + (i >= 10 ? ' xtra' : '');
+    el.textContent = w;
+    el.style.left = pos[i][0]+'%'; el.style.top = pos[i][1]+'%';
+    el.style.fontSize = 'clamp(13px,' + (pos[i][2]/9).toFixed(2) + 'vw,' + pos[i][2] + 'px)';
+    cloud.appendChild(el);
+    return el;
+  });
+  var order = buzz.map(function(_,i){return i;}).sort(function(a,b){
+    return Math.hypot(pos[b][0]-50,pos[b][1]-46) - Math.hypot(pos[a][0]-50,pos[a][1]-46);
+  });
+  var focusword = document.getElementById('focusword'), s2line = document.getElementById('s2line');
+
+  /* ---------- ۴ · جاده‌ها ---------- */
+  var roadEls = Array.prototype.slice.call(document.querySelectorAll('#roads .road:not(.chosen)'));
+  var labels = Array.prototype.slice.call(document.querySelectorAll('#roads .rlabel:not(.win)'));
+  var roadOrder = [0,5,1,4,2,3]; // از بیرون به درون
+  var chosen = document.getElementById('chosen'), dest = document.getElementById('dest');
+  var winLabel = document.getElementById('winLabel'), s3copy = document.getElementById('s3copy');
+
+  var scenes = Array.prototype.slice.call(document.querySelectorAll('.scrub'));
+  var railFill = document.getElementById('railFill');
+
+  function frame(){
+    var vh = window.innerHeight;
+    scenes.forEach(function(sec){
+      var r = sec.getBoundingClientRect();
+      var p = clamp((-r.top) / (r.height - vh));
+      if(sec.id === 'noise'){
+        var W = sec.querySelector('.stage').clientWidth;
+        order.forEach(function(idx, rank){
+          var k = ease(clamp((p - rank*0.025) / 0.5));
+          var dx = (50 - pos[idx][0]) / 100 * W * k;
+          var dy = (46 - pos[idx][1]) / 100 * vh * k;
+          var el = buzz[idx];
+          el.style.transform = 'translate(-50%,-50%) translate(' + dx.toFixed(1) + 'px,' + dy.toFixed(1) + 'px) scale(' + (1 - .55*k).toFixed(3) + ')';
+          el.style.opacity = (.85 * (1 - k)).toFixed(3);
+        });
+        focusword.classList.toggle('on', p > 0.58);
+        s2line.classList.toggle('on', p > 0.8);
+      }
+      if(sec.id === 'roads-sec'){
+        var gone = Math.round(clamp(p/0.6) * roadOrder.length);
+        roadOrder.forEach(function(ri, n){
+          roadEls[ri].classList.toggle('gone', n < gone);
+          labels[ri].classList.toggle('gone', n < gone);
+        });
+        chosen.style.strokeDashoffset = (340 * (1 - clamp((p-0.45)/0.35))).toFixed(1);
+        dest.classList.toggle('on', p > 0.78);
+        winLabel.classList.toggle('on', p > 0.8);
+        s3copy.classList.toggle('on', p > 0.82);
+      }
+    });
+    var max = document.documentElement.scrollHeight - vh;
+    railFill.style.height = (clamp((window.scrollY||0)/max)*100) + '%';
+    ticking = false;
+  }
+  var ticking = false;
+  function onScroll(){ if(!ticking){ ticking = true; requestAnimationFrame(frame); } }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  frame();
+
+  /* ---------- نمایش هنگام ورود ---------- */
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.25});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+  }
+
+})();
+</script>
+</body>
+</html>
